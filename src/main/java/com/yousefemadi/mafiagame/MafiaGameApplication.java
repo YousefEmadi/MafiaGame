@@ -34,7 +34,19 @@ public class MafiaGameApplication {
         return new Game(100, players, scenario);
     }
     public static boolean passGameVoteCriteria(Player player, Game game) {
-        return player.receivedVotes >= game.players.size() / 2;
+        int criteria = 0;
+        int voters = game.players.size();
+        if ((voters <= 15) && (voters >= 13)) 
+            criteria = 6;
+        if ((voters <= 12) && (voters >= 11))
+            criteria = 5;
+        if ((voters <= 10) && (voters >= 8))
+            criteria = 4;
+        if ((voters <= 7) && (voters >= 6))
+            criteria = 3;
+        if ((voters <= 5) && (voters >= 4))
+            criteria = 2;
+        return (player.receivedVotes >= criteria);
     }
 
     public static void main(String[] args) {
