@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -48,6 +47,7 @@ public class MafiaGameApplication {
             criteria = 2;
         return (player.receivedVotes >= criteria);
     }
+
 
     public static void main(String[] args) {
         SpringApplication.run(MafiaGameApplication.class, args);
@@ -111,9 +111,16 @@ public class MafiaGameApplication {
                         System.out.println("defendantsPlayers\n:" + defendantsPlayers);
                         break;
                     case 6:
-                        PrintStream var10000 = System.out;
-                        int var10001 = game.players.size();
-                        var10000.println("Lynching Starts with " + var10001 + " players and " + defendantsPlayers.size() + " defendantsPlayers");
+
+                        if (defendantsPlayers.size() == 2) {
+                            defendantsPlayers.forEach((player) -> {
+                                player.canVote = false;
+                            });
+                        };  // if there are 2 defendants, they can't vote for lynching each other
+                        int lynchVoters = (int) game.players.stream().filter(player -> player.isAlive && player.canVote).count();
+
+
+                        System.out.println("Lynching Starts with " + lynchVoters + " players as lynch voters and " + defendantsPlayers.size() + " defendantsPlayers");
                         defendantsPlayers.forEach((defendant) -> {
                             System.out.println(defendant.name + ": ");
                             defendant.receivedVotes = input.nextInt();
