@@ -42,6 +42,16 @@ public class Game {
         this.roles.remove(role);
     }
 
+    public int maxReceivedVotes(){
+        int maxReceivedVotes = (players.get(0)).receivedVotes;
+        for(int i = 0; i < players.size(); i++) {
+            if ((players.get(i)).receivedVotes >= maxReceivedVotes) {
+                maxReceivedVotes = (players.get(i)).receivedVotes;
+            }
+        }
+        return maxReceivedVotes;
+    }
+
     public String toString() {
         return "Game{id=" + this.id + ", scenario code=" + this.scenario.code + ", players=\n" + this.players + ", roles=" + this.roles + ", isActive=" + this.isActive + "}\n";
     }

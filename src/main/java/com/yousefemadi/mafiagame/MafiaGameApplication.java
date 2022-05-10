@@ -39,8 +39,12 @@ public class MafiaGameApplication {
             criteria = 6;
         if ((voters <= 12) && (voters >= 11))
             criteria = 5;
+        if (criteria == 5 && game.maxReceivedVotes() >= 8)   // too many votes for someone
+            criteria = 6;
         if ((voters <= 10) && (voters >= 8))
             criteria = 4;
+        if (criteria == 4 && game.maxReceivedVotes() >= 7)   // too many votes for someone
+            criteria = 5;
         if ((voters <= 7) && (voters >= 6))
             criteria = 3;
         if ((voters <= 5) && (voters >= 4))
@@ -132,19 +136,16 @@ public class MafiaGameApplication {
                         Collections.sort(lynchList);
                         Collections.reverse(lynchList);
                         System.out.println("lynchList" + lynchList);
-                        int maxReceivedVotes = (lynchList.get(0)).receivedVotes;
-                        int i = 0;
+//                        int maxReceivedVotes = (lynchList.get(0)).receivedVotes;
+//                        for(int i = 0; i < lynchList.size(); ++i) {
+//                            if ((lynchList.get(i)).receivedVotes >= maxReceivedVotes) {
+//                                maxReceivedVotes = (lynchList.get(i)).receivedVotes;
+//                            }
+//                        }
 
-                        for(; i < lynchList.size(); ++i) {
-                            if ((lynchList.get(i)).receivedVotes >= maxReceivedVotes) {
-                                maxReceivedVotes = (lynchList.get(i)).receivedVotes;
-                            }
-                        }
-
-                        System.out.println("maxReceivedVote number = " + maxReceivedVotes);
-                        int finalMaxReceivedVotes = maxReceivedVotes;
+                        System.out.println("maxReceivedVote number = " + game.maxReceivedVotes());
                         lynchList.forEach((player) -> {
-                            if (player.receivedVotes == finalMaxReceivedVotes) {
+                            if (player.receivedVotes == game.maxReceivedVotes()) {
                                 playersWithMaxLynchVote.add(player);
                             }
 
